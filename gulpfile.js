@@ -21,7 +21,12 @@ gulp.task('serve', ['styles', 'scripts'], function () {
       index: 'index.html'
     }
   })
+  gulp.watch("./css/*.css", ['styles']);
+  gulp.watch("./js/*.js", ['scripts']);
+  gulp.watch('./*.html').on('change', reload);
 })
+
+
 gulp.task('scripts-dist', function () {
   gulp.src('./js/*.js')
     .pipe(uglify())
@@ -56,6 +61,5 @@ gulp.task('copy-fonts', function () {
     .pipe(gulp.dest('./dist/fonts'))
 })
 
-gulp.watch('*.html').on('change', reload)
 
 gulp.task('default', ['serve'])
