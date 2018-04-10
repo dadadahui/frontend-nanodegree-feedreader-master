@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var autoprefixer = require('gulp-autoprefixer');
-var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 
 var browserSync = require('browser-sync').create();
@@ -23,7 +22,6 @@ gulp.task('serve', ['styles','scripts'], function () {
 });
 gulp.task('scripts-dist', function () {
   gulp.src('./js/*.js')
-    .pipe(concat('all.js'))
     .pipe(uglify())
     .pipe(gulp.dest('./dist/js'))
 });
@@ -37,7 +35,7 @@ gulp.task('scripts', function () {
 gulp.task('styles', function () {
     gulp.src('./css/*.css')
         .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
+            browsers: ['last 2 versions']
         }))
         .pipe(gulp.dest('./dist/css'))
         .pipe(reload({ stream: true }))
@@ -54,7 +52,6 @@ gulp.task('copy-fonts', function () {
 });
 
 gulp.watch('*.html').on('change', reload);
-// gulp.watch('js//**/*.js').on('change', reload);
 
 
 gulp.task('default', ['serve']);
