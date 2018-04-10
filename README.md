@@ -1,7 +1,9 @@
 # 运行
 打开index.html
+
 #详细
 使用了jasmine这个测试框架
+
 # License
 
 Copyright (c) 2012-2013 Will Wen Gunn(921608262@qq.com)
