@@ -1,7 +1,7 @@
 # 运行
 打开index.html
 
-#详细
+# 详细
 使用了jasmine这个测试框架
 
 # License
