@@ -33,8 +33,10 @@ $(function () {
      */
     it('each feed has a URL', function () {
       allFeeds.forEach(function (value, index, array) {
-        expect(value.url).toBeDefined()
-        expect(value.url.length).not.toBe(0)
+        sameDetection(value.url)
+
+        var regularExpressionUrl = /^((ht|f)tps?):\/\/([\w\-]+(\.[\w\-]+)*\/)*[\w\-]+(\.[\w\-]+)*\/?(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?/; // 检查 URL 格式是否正确的正规表达式
+        expect(value.url).toMatch(regularExpressionUrl); // 检查格式
       })
     })
 
@@ -45,11 +47,17 @@ $(function () {
 
     it('each feed has a name', function () {
       allFeeds.forEach(function (value, index, array) {
-        expect(value.name).toBeDefined()
-        expect(value.name.length).not.toBe(0)
+        sameDetection(value.name)
       })
     })
+
   })
+  function sameDetection(name) {
+    // 将相似的代码都移入到该方法中，避免重复编写相同代码。
+    expect(name).toBeDefined()
+    expect(name.length).not.toBe(0)
+  }
+
 
   /* TODO: Write a new test suite named "The menu" */
   describe('The menu', function () {
@@ -84,10 +92,7 @@ $(function () {
   describe('Initial Entries', function () {
 
     beforeEach(function (done) {
-      loadFeed(0, function () {
-        done()
-      })
-
+      loadFeed(0,done)
     })
     /* TODO: Write a test that ensures when the loadFeed
      * function is called and completes its work, there is at least
@@ -95,29 +100,37 @@ $(function () {
      * Remember, loadFeed() is asynchronous so this test will require
      * the use of Jasmine's beforeEach and asynchronous done() function.
      */
-    it('is at least a single', function (done) {
+    it('is at least a single', function () {
       expect($('.feed').children.length).not.toBe(0)
-      done()
     })
   })
+
+
   /* TODO: Write a new test suite named "New Feed Selection" */
   describe('New Feed Selection', function () {
-    var hContOld;
+    var originalTimeout;
+    var hContOld,
+        hContNew;
     beforeEach(function (done) {
-      hContOld = $('.feed').eq(0).find('h2').text().trim()
       loadFeed(1, function () {
-        done()
+        hContOld = $('.feed').eq(0).find('h2').text().trim()
+        loadFeed(0, function () {
+          hContNew = $('.feed').eq(0).find('h2').text().trim()
+          done()
+        })
       })
 
+
+
+
     })
+
     /* TODO: Write a test that ensures when a new feed is loaded
      * by the loadFeed function that the content actually changes.
      * Remember, loadFeed() is asynchronous.
      */
-    it('the content actually changes', function (done) {
-      var hContNew = $('.feed').eq(0).find('h2').text().trim()
+    it('the content actually changes', function () {
       expect(hContOld).not.toEqual(hContNew)
-      done()
     })
   })
 }())
